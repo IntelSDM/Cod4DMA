@@ -22,6 +22,8 @@ void DrawPlayers()
 		return;
 	if(GameInstance->GetLocalPlayer()->GetPosition() == Vector3::Zero())
 		return;
+	if(!Configs.Player.Enable)
+		return;
 	for (auto player : GameInstance->GetPlayers())
 	{
 		if(player->GetPosition() == Vector3::Zero())
@@ -34,6 +36,15 @@ void DrawPlayers()
 		Vector2 pos = GameInstance->GetLocalPlayer()->WorldToScreen(player->GetPosition());
 		if(pos == Vector2::Zero())
 			continue;
-		DrawText(pos.x, pos.y, L"Player", "Verdana", 12, MyColour(255, 255, 255), Centre);
+		int distance = Vector3::Distance(player->GetPosition(), GameInstance->GetLocalPlayer()->GetPosition());
+		if(distance > Configs.Player.MaxDistance)
+			continue;
+		Vector2 headpos = GameInstance->GetLocalPlayer()->WorldToScreen(player->GetHeadWorldPosition());
+		std::wstring name = Configs.Player.Name ? L"Player" : L"";
+		std::wstring wdistance = Configs.Player.Distance ? L"[" + std::to_wstring(distance) + L"m]" : L"";
+		DrawText(pos.x, pos.y, name + wdistance, "Verdana", Configs.Player.FontSize, Configs.Player.TextColour, Centre);
+		float height = Vector2::Distance(pos, headpos);
+		if(Configs.Player.Box)
+		OutlineRectangle(headpos.x - (height / 4), headpos.y, height/2, height, 1, Configs.Player.BoxColour);
 	}
 }

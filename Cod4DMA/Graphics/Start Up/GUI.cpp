@@ -48,74 +48,18 @@ void CreateGUI()
 			playeresptab->Push(name);
 			auto distance = std::make_shared<Toggle>(100, 45, LIT(L"Distance"), &Configs.Player.Distance);
 			playeresptab->Push(distance);
-			auto chams = std::make_shared<Toggle>(100, 65, LIT(L"Chams"), &Configs.Player.Chams);
-			playeresptab->Push(chams);
-			auto drawfriendly = std::make_shared<Toggle>(100, 85, LIT(L"Draw Friendly"), &Configs.Player.DrawFriends);
-			playeresptab->Push(drawfriendly);
-			auto friendcolour = std::make_shared<ColourPicker>(200, 86, &Configs.Player.FriendColour);
-			playeresptab->Push(friendcolour);
-			auto chammode = std::make_shared<DropDown>(100, 115, LIT(L"Cham Mode"), &Configs.Player.ChamMode,
-				std::vector<std::wstring>{LIT(L"Outline Red"), LIT(L"Outline Blue"), LIT(L"Outline Yellow"), LIT(L"Outline Orange"), LIT(L"Outline Cyan"), LIT(L"Outline White"),
-				LIT(L"Filled Red"), LIT(L"Filled Blue"), LIT(L"Filled Yellow"), LIT(L"Filled Orange"), LIT(L"Filled Cyan"), LIT(L"Filled White")});
-			playeresptab->Push(chammode);
-			auto maxdistance = std::make_shared<Slider<int>>(100, 140, 150, LIT(L"Max Distance"), LIT(L"m"), 0, 1000, &Configs.Player.MaxDistance);
+			auto box = std::make_shared<Toggle>(100, 65, LIT(L"Distance"), &Configs.Player.Distance);
+			playeresptab->Push(box);
+			auto maxdistance = std::make_shared<Slider<int>>(100, 85, 150, LIT(L"Max Distance"), LIT(L"m"), 0, 1000, &Configs.Player.MaxDistance);
 			playeresptab->Push(maxdistance);
-			auto textsize = std::make_shared<Slider<int>>(100, 165,150, LIT(L"Text Size"), LIT(L"px"), 4, 16, &Configs.Player.FontSize);
+			auto textsize = std::make_shared<Slider<int>>(100, 110,150, LIT(L"Text Size"), LIT(L"px"), 4, 16, &Configs.Player.FontSize);
 			playeresptab->Push(textsize);
 		
 
 
 		}
 		tabcontroller->Push(playeresptab);
-		auto zombieesp = std::make_shared<Tab>(LIT(L"Zombie ESP"), 5, 30, &SelectedTab, 0, 20);
-		{
-			auto enable = std::make_shared<Toggle>(100, 5, LIT(L"Enable"), &Configs.Zombie.Enable);
-			zombieesp->Push(enable);
-			auto textcolour = std::make_shared<ColourPicker>(160, 6, &Configs.Zombie.TextColour);
-			zombieesp->Push(textcolour);
-			auto name = std::make_shared<Toggle>(100, 25, LIT(L"Name"), &Configs.Zombie.Name);
-			zombieesp->Push(name);
-			auto distance = std::make_shared<Toggle>(100, 45, LIT(L"Distance"), &Configs.Zombie.Distance);
-			zombieesp->Push(distance);
-			auto maxdistance = std::make_shared<Slider<int>>(100, 65, 150, LIT(L"Max Distance"), LIT(L"m"), 0, 1000, &Configs.Zombie.MaxDistance);
-			zombieesp->Push(maxdistance);
-			auto textsize = std::make_shared<Slider<int>>(100, 90, 150, LIT(L"Text Size"), LIT(L"px"), 4, 16, &Configs.Zombie.FontSize);
-			zombieesp->Push(textsize);
-		}
-		tabcontroller->Push(zombieesp);
-		auto supplyesptab = std::make_shared<Tab>(LIT(L"Supply ESP"), 5, 55, &SelectedTab, 0, 20);
-		{
-			auto enable = std::make_shared<Toggle>(100, 5, LIT(L"Enable"), &Configs.Supply.Enable);
-			supplyesptab->Push(enable);
-			auto textcolour = std::make_shared<ColourPicker>(160, 6, &Configs.Supply.TextColour);
-			supplyesptab->Push(textcolour);
-			auto name = std::make_shared<Toggle>(100, 25, LIT(L"Name"), &Configs.Supply.Name);
-			supplyesptab->Push(name);
-			auto distance = std::make_shared<Toggle>(100, 45, LIT(L"Distance"), &Configs.Supply.Distance);
-			supplyesptab->Push(distance);
-			auto maxdistance = std::make_shared<Slider<int>>(100, 65, 150, LIT(L"Max Distance"), LIT(L"m"), 0, 1000, &Configs.Supply.MaxDistance);
-			supplyesptab->Push(maxdistance);
-			auto textsize = std::make_shared<Slider<int>>(100, 90, 150, LIT(L"Text Size"), LIT(L"px"), 4, 16, &Configs.Supply.FontSize);
-			supplyesptab->Push(textsize);
-		}
-		tabcontroller->Push(supplyesptab);
-		auto trapesptab = std::make_shared<Tab>(LIT(L"Trap ESP"), 5, 80, &SelectedTab, 0, 20);
-		{
-			auto enable = std::make_shared<Toggle>(100, 5, LIT(L"Enable"), &Configs.Trap.Enable);
-			trapesptab->Push(enable);
-			auto textcolour = std::make_shared<ColourPicker>(160, 6, &Configs.Trap.TextColour);
-			trapesptab->Push(textcolour);
-			auto name = std::make_shared<Toggle>(100, 25, LIT(L"Name"), &Configs.Trap.Name);
-			trapesptab->Push(name);
-			auto distance = std::make_shared<Toggle>(100, 45, LIT(L"Distance"), &Configs.Trap.Distance);
-			trapesptab->Push(distance);
-			auto maxdistance = std::make_shared<Slider<int>>(100, 65, 150, LIT(L"Max Distance"), LIT(L"m"), 0, 1000, &Configs.Trap.MaxDistance);
-			trapesptab->Push(maxdistance);
-			auto textsize = std::make_shared<Slider<int>>(100, 90, 150, LIT(L"Text Size"), LIT(L"px"), 4, 16, &Configs.Trap.FontSize);
-			trapesptab->Push(textsize);
-		}
-		tabcontroller->Push(trapesptab);
-		auto overlaytab = std::make_shared<Tab>(LIT(L"Overlay"), 5, 105, &SelectedTab, 0, 20);
+		auto overlaytab = std::make_shared<Tab>(LIT(L"Overlay"), 5, 30, &SelectedTab, 0, 20);
 		{
 			auto overrideresolution = std::make_shared<Toggle>(100, 5, LIT(L"Override W2S Resolution"), &Configs.Overlay.OverrideResolution);
 			overlaytab->Push(overrideresolution);
@@ -154,7 +98,7 @@ void CreateGUI()
 			
 		}
 		tabcontroller->Push(overlaytab);
-		auto aimbottab = std::make_shared<Tab>(LIT(L"Aimbot"), 5, 130, &SelectedTab, 0, 20);
+		auto aimbottab = std::make_shared<Tab>(LIT(L"Aimbot"), 5, 55, &SelectedTab, 0, 20);
 		{
 			auto enable = std::make_shared<Toggle>(100, 5, LIT(L"Enable"), &Configs.Aimbot.Enable);
 			aimbottab->Push(enable);
@@ -184,7 +128,7 @@ void CreateGUI()
 			aimbottab->Push(connecttokmbox);
 		}
 		tabcontroller->Push(aimbottab);
-		auto configtab = std::make_shared<Tab>(LIT(L"Config"), 5, 155, &SelectedTab, 0, 20);
+		auto configtab = std::make_shared<Tab>(LIT(L"Config"), 5, 80, &SelectedTab, 0, 20);
 		{
 			auto saveconfig = std::make_shared<Button>(100, 5, LIT(L"Save"), []()
 				{

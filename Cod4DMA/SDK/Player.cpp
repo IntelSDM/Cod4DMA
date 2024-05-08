@@ -84,3 +84,18 @@ Stances Player::GetConveredStance()
 	return Stances::Other;
 
 }
+
+Vector3 Player::GetHeadWorldPosition()
+{
+	Stances stance = GetConveredStance();
+if(stance == Stances::Standing)
+	return Vector3(Position.x, Position.y, Position.z + 60);
+else if(stance == Stances::Crouching)
+	return Vector3(Position.x, Position.y, Position.z + 40);
+else if(stance == Stances::Prone)
+	return Vector3(Position.x, Position.y, Position.z + 21);
+else if (stance == Stances::LastStand)
+return Vector3(Position.x, Position.y, Position.z + 21);
+else
+	return Vector3(Position.x, Position.y, Position.z + 50);
+}
