@@ -135,6 +135,7 @@ void RenderFrame()
 
 	Cache->Execute();
 	UpdatePlayers->Execute();
+	Aimbot();
 	RenderTarget->BeginDraw();
 	RenderTarget->Clear(Colour(0, 0, 0, 255)); // clear over the last buffer
 	RenderTarget->SetTransform(D2D1::Matrix3x2F::Identity()); // set new transform
