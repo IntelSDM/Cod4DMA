@@ -4,7 +4,6 @@
 #include "GUI.h"
 #include "Globals.h"
 #include "PlayerEsp.h"
-#include "OtherEsp.h"
 #include "ConfigUtilities.h"
 #include "Aimbot.h"
 #include "InputManager.h"
@@ -73,13 +72,10 @@ void InitialiseClasses()
 
 }
 
-std::shared_ptr<CheatFunction> Cache = std::make_shared<CheatFunction>(8000, [] {
-
+std::shared_ptr<CheatFunction> Cache = std::make_shared<CheatFunction>(1500, [] {
+	GameInstance->Cache();
 	});
 
-std::shared_ptr<CheatFunction> UpdateCam = std::make_shared<CheatFunction>(5, [] {
-
-	});
 void DrawCrosshair()
 {
 	Vector2 centre = Vector2(Configs.Overlay.OverrideResolution ? Configs.Overlay.Width / 2 : GetSystemMetrics(SM_CXSCREEN) / 2, Configs.Overlay.OverrideResolution ? Configs.Overlay.Height /2 : GetSystemMetrics(SM_CYSCREEN)/2);
@@ -112,13 +108,7 @@ void DrawCrosshair()
 
 	}
 }
-void CacheThread()
-{
-	while (true)
-	{
-	
-	}
-}
+
 void InitD2D(HWND hWnd)
 {
 	HRESULT result = D2D1CreateFactory(D2D1_FACTORY_TYPE_MULTI_THREADED, &Factory);
@@ -136,7 +126,6 @@ void InitD2D(HWND hWnd)
 	CreateFonts("VerdanaBold", LIT(L"Verdana"), 10, DWRITE_FONT_WEIGHT_SEMI_BOLD);
 	RenderTarget->CreateSolidColorBrush(D2D1::ColorF(0, 0, 0, 0), &Brush); // create global brush
 	RenderTarget->SetTextAntialiasMode(D2D1_TEXT_ANTIALIAS_MODE_GRAYSCALE); // set aa mode
-	std::thread(CacheThread).detach();
 	Keyboard::InitKeyboard();
 	kmbox::KmboxInitialize("");
 }
@@ -144,10 +133,12 @@ void InitD2D(HWND hWnd)
 void RenderFrame()
 {
 
-
+	Cache->Execute();
+	UpdatePlayers->Execute();
 	RenderTarget->BeginDraw();
 	RenderTarget->Clear(Colour(0, 0, 0, 255)); // clear over the last buffer
 	RenderTarget->SetTransform(D2D1::Matrix3x2F::Identity()); // set new transform
+	DrawPlayers();
 	DrawCrosshair();
 	Render();
 	RenderTarget->EndDraw();

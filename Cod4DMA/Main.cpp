@@ -6,7 +6,7 @@
 #include "GUI.h"
 #include "ConfigUtilities.h"
 #include "Game.h"
-
+std::shared_ptr<Game> GameInstance;
 void main()
 {
 	while (!TargetProcess.Init("iw3mp.exe", true, true))
@@ -17,7 +17,7 @@ void main()
 	}
 	TargetProcess.FixCr3();
 	std::printf("Cod4x: 0x%X\n", TargetProcess.GetBaseAddress("iw3mp.exe"));
-	std::shared_ptr<Game> game = std::make_shared<Game>();
+	GameInstance = std::make_shared<Game>();
 }
 LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {

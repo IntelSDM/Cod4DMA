@@ -1,12 +1,12 @@
 #pragma once
-/*
-dwCEntities = 0x8472D8
-dwCClients = 0x831270
-dwLocalIndex = 0x746338
-dwRefdef = 0x78F600
-EntitySize = 0x1DC
-ClientSize = 0x4CC
-*/
+enum class Stances
+{
+	Standing,
+	Crouching,
+	Prone,
+	LastStand,
+	Other
+};
 class Player
 {
 private:
@@ -46,6 +46,7 @@ public:
 	bool GetAlive();
 	Vector3 GetPosition();
 	int GetStance();
+	Stances GetConveredStance();
 	std::wstring GetName();
 
 };

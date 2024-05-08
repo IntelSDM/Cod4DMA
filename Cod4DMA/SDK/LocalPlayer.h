@@ -1,5 +1,6 @@
 #pragma once
 #include "player.h"
+
 class LocalPlayer
 {
 private:
@@ -13,6 +14,7 @@ private:
 	Vector3 Position = { 0, 0, 0 };
 
 	std::shared_ptr<Player> PlayerInstance;
+
 public:
 	void UpdateClientIndex(VMMDLL_SCATTER_HANDLE handle);
 	void UpdateFov(VMMDLL_SCATTER_HANDLE handle);
@@ -24,5 +26,7 @@ public:
 	Vector3 GetViewAngles();
 	Vector3 GetPosition();
 
-	void SetUpPlayerInstance();
+	void SetUpPlayerInstance(std::shared_ptr<Player> player);
+
+	Vector2 WorldToScreen(Vector3 world);
 };

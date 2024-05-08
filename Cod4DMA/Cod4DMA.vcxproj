@@ -149,7 +149,6 @@
   <ItemGroup>
     <ClCompile Include="Aimbot\Aimbot.cpp" />
     <ClCompile Include="Config\ConfigUtilities.cpp" />
-    <ClCompile Include="Esp\OtherEsp.cpp" />
     <ClCompile Include="Esp\PlayerEsp.cpp" />
     <ClCompile Include="Graphics\Drawing.cpp" />
     <ClCompile Include="Graphics\Entities\Button.cpp" />
@@ -194,7 +193,6 @@
     <ClInclude Include="Config\SupplyConfig.h" />
     <ClInclude Include="Config\TrapConfig.h" />
     <ClInclude Include="Config\ZombieConfig.h" />
-    <ClInclude Include="Esp\OtherEsp.h" />
     <ClInclude Include="Esp\PlayerEsp.h" />
     <ClInclude Include="Globals.h" />
     <ClInclude Include="Graphics\Drawing.h" />

@@ -81,3 +81,16 @@ Player::Player(int itterator)
 {
 	Iteration = itterator;
 }
+
+Stances Player::GetConveredStance()
+{
+	if (Stance == 2 || Stance == 1024 || Stance == 2048 || Stance == 1048576 || Stance == 0 || Stance == 16 || Stance == 32)	// 1048576 is sprinting		0 is broken ankles		There's a lot of different values for mounting objects
+		return Stances::Standing;
+	else if (Stance == 4 || Stance == 4096 || Stance == 8192 || Stance == 64 || Stance == 128)	// last two are moving while aiming
+		return Stances::Crouching;
+	else if (Stance == 8 || Stance == 256 || Stance == 512)
+		return Stances::Prone;
+	else
+	return Stances::Other;
+
+}
