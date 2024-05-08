@@ -39,27 +39,31 @@ void Game::Cache()
 		player->UpdateTeam(handle);
 		player->UpdateAlive(handle);
 		player->UpdatePosition(handle);
-		player->UpdateName(handle);
 		player->UpdateStance(handle);
-		if (i == LocalPlayerInstance->GetClientIndex())
-		{
-			LocalPlayerInstance->SetUpPlayerInstance(player);
-
-		}
-		else
-		{
-			templayers.push_back(player);
-		}
+		templayers.push_back(player);
+		
 	}
 	TargetProcess.ExecuteReadScatter(handle);
 	TargetProcess.CloseScatterHandle(handle);
+	LocalPlayerInstance->SetUpPlayerInstance();
+	handle = TargetProcess.CreateScatterHandle();
+	LocalPlayerInstance->GetPlayerInstance()->UpdateClientSize(handle);
+	LocalPlayerInstance->GetPlayerInstance()->UpdateTeam(handle);
+	LocalPlayerInstance->GetPlayerInstance()->UpdateAlive(handle);
+	LocalPlayerInstance->GetPlayerInstance()->UpdateStance(handle);
+	TargetProcess.ExecuteReadScatter(handle);
+	TargetProcess.CloseScatterHandle(handle);
 	std::vector<std::shared_ptr<Player>> players;
+
+
 
 	for (auto player : templayers)
 	{
 		if(!player->GetClientSize())
 			continue;
 		if (!player->GetAlive())
+			continue;
+		if (player->GetTeam() ==LocalPlayerInstance->GetPlayerInstance()->GetTeam())
 			continue;
 		players.push_back(player);
 
@@ -95,3 +99,4 @@ std::shared_ptr<LocalPlayer> Game::GetLocalPlayer()
 {
 	return LocalPlayerInstance;
 }
+

@@ -26,7 +26,8 @@ public:
 	Vector3 GetViewAngles();
 	Vector3 GetPosition();
 
-	void SetUpPlayerInstance(std::shared_ptr<Player> player);
+	void SetUpPlayerInstance();
 
 	Vector2 WorldToScreen(Vector3 world);
+	std::shared_ptr<Player> GetPlayerInstance();
 };

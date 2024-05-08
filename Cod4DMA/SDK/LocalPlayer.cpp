@@ -42,9 +42,9 @@ Vector3 LocalPlayer::GetPosition()
 	return Position;
 }
 
-void LocalPlayer::SetUpPlayerInstance(std::shared_ptr<Player> player)
+void LocalPlayer::SetUpPlayerInstance()
 {
-	PlayerInstance = player;
+	PlayerInstance = std::make_shared<Player>(ClientIndex);
 }
 
 
@@ -98,4 +98,9 @@ Vector2 LocalPlayer::WorldToScreen(Vector3 world)
 	screen.x = centre.x+ (centre.x / vTransForm.z * (1 / Fov.x)) * vTransForm.x;
 	screen.y = centre.y + (centre.y / vTransForm.z * (1 / Fov.y)) * vTransForm.y;
 	return screen;
+}
+
+std::shared_ptr<Player> LocalPlayer::GetPlayerInstance()
+{
+	return PlayerInstance;
 }

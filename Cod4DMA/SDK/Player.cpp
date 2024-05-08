@@ -31,10 +31,6 @@ void Player::UpdateStance(VMMDLL_SCATTER_HANDLE handle)
 	TargetProcess.AddScatterReadRequest(handle, ClientInfoOffset + Iteration * ClientSizeOffset + StanceOffset, reinterpret_cast<void*>(&Stance), sizeof(int));
 }
 
-void Player::UpdateName(VMMDLL_SCATTER_HANDLE handle)
-{
-	TargetProcess.AddScatterReadRequest(handle, ClientInfoOffset + Iteration * ClientSizeOffset + NameOffset, reinterpret_cast<void*>(&Name), sizeof(char[16]));
-}
 
 int Player::GetIteration()
 {
@@ -69,12 +65,6 @@ Vector3 Player::GetPosition()
 int Player::GetStance()
 {
 	return Stance;
-}
-
-std::wstring Player::GetName()
-{
-	std::string name(Name);
-	return std::wstring(name.begin(), name.end());
 }
 
 Player::Player(int itterator)

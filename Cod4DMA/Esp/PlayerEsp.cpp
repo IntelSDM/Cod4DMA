@@ -34,6 +34,6 @@ void DrawPlayers()
 		Vector2 pos = GameInstance->GetLocalPlayer()->WorldToScreen(player->GetPosition());
 		if(pos == Vector2::Zero())
 			continue;
-		DrawText(pos.x, pos.y, L"Test", "Verdana", 12, MyColour(255, 255, 255), Centre);
+		DrawText(pos.x, pos.y, L"Player", "Verdana", 12, MyColour(255, 255, 255), Centre);
 	}
 }

@@ -26,8 +26,6 @@ private:
 	Vector3 Position = { 0, 0, 0 };
 	uint32_t StanceOffset = 0x470;
 	int Stance = 0;
-	uint32_t NameOffset = 0xc;
-	char Name[16];
 
 public:
 	Player(int itterator);
@@ -37,7 +35,6 @@ public:
 	void UpdateAlive(VMMDLL_SCATTER_HANDLE handle);
 	void UpdatePosition(VMMDLL_SCATTER_HANDLE handle);
 	void UpdateStance(VMMDLL_SCATTER_HANDLE handle);
-	void UpdateName(VMMDLL_SCATTER_HANDLE handle);
 
 	int GetIteration();
 	int GetClientSize();
@@ -47,6 +44,5 @@ public:
 	Vector3 GetPosition();
 	int GetStance();
 	Stances GetConveredStance();
-	std::wstring GetName();
 
 };
