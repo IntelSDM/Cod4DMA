@@ -31,7 +31,7 @@ void Game::Cache()
 	LocalPlayerInstance->UpdateFov(handle);
 	LocalPlayerInstance->UpdateViewAngles(handle);
 	LocalPlayerInstance->UpdatePosition(handle);
-	for (int i = 0; i < PlayerCount; i++)
+	for (int i = 0; i <= PlayerCount+1; i++)
 	{
 		
 		std::shared_ptr<Player> player = std::make_shared<Player>(i);
