@@ -16,6 +16,8 @@ public:
     int FOV = 200;
     int Aimkey = 5;
     bool DrawFOV = true;
+    int AimBone = 0;
+    int Smoothing = 0;
     D2D1::ColorF FOVColour = D2D1::ColorF::White;
     void ToJsonColour(json* j, const std::string& name, D2D1::ColorF* colour)
     {
@@ -47,6 +49,8 @@ public:
         j[ConfigName][LIT("Aimkey")] = Aimkey;
         j[ConfigName][LIT("DrawFOV")] = DrawFOV;
         ToJsonColour(&j, LIT("FOVColour"), &FOVColour);
+        j[ConfigName][LIT("AimBone")] = AimBone;
+        j[ConfigName][LIT("Smoothing")] = Smoothing;
 
 
 
@@ -71,6 +75,10 @@ public:
         if (j[ConfigName].contains(LIT("DrawFOV")))
             DrawFOV = j[ConfigName][LIT("DrawFOV")];
         FromJsonColour(j, LIT("FOVColour"), &FOVColour);
+        if (j[ConfigName].contains(LIT("AimBone")))
+			AimBone = j[ConfigName][LIT("AimBone")];
+        if (j[ConfigName].contains(LIT("Smoothing")))
+            Smoothing = j[ConfigName][LIT("Smoothing")];
     }
 };
 

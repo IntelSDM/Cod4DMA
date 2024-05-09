@@ -45,4 +45,5 @@ public:
 	int GetStance();
 	Stances GetConveredStance();
 	Vector3 GetHeadWorldPosition();
+	Vector3 GetAimBonePosition();
 };

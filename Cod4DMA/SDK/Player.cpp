@@ -1,5 +1,6 @@
 #include "Pch.h"
 #include "Player.h"
+#include "ConfigUtilities.h"
 
 void Player::UpdateClientSize(VMMDLL_SCATTER_HANDLE handle)
 {
@@ -98,4 +99,26 @@ else if (stance == Stances::LastStand)
 return Vector3(Position.x, Position.y, Position.z + 21);
 else
 	return Vector3(Position.x, Position.y, Position.z + 50);
+}
+Vector3 Player::GetAimBonePosition()
+{
+	if (Configs.Aimbot.AimBone == 0)
+	{
+		return GetHeadWorldPosition();
+	}
+	if (Configs.Aimbot.AimBone == 1)
+	{
+		Stances stance = GetConveredStance();
+		if (stance == Stances::Standing)
+			return Vector3(Position.x, Position.y, Position.z + 50);
+		else if (stance == Stances::Crouching)
+			return Vector3(Position.x, Position.y, Position.z + 35);
+		else if (stance == Stances::Prone)
+			return Vector3(Position.x, Position.y, Position.z + 21);
+		else if (stance == Stances::LastStand)
+			return Vector3(Position.x, Position.y, Position.z + 21);
+		else
+			return Vector3(Position.x, Position.y, Position.z + 40);
+	}
+	return Vector3::Zero();
 }

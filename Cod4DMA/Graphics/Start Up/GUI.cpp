@@ -104,10 +104,12 @@ void CreateGUI()
 			aimbottab->Push(enable);
 			auto targetplayers = std::make_shared<Toggle>(100, 25, LIT(L"Target Players"), &Configs.Aimbot.TargetPlayers);
 			aimbottab->Push(targetplayers);
-			auto drawfov = std::make_shared<Toggle>(100, 65, LIT(L"Draw FOV"), &Configs.Aimbot.DrawFOV);
+			auto drawfov = std::make_shared<Toggle>(100, 45, LIT(L"Draw FOV"), &Configs.Aimbot.DrawFOV);
 			aimbottab->Push(drawfov);
-			auto colourpicker = std::make_shared<ColourPicker>(180, 66, &Configs.Aimbot.FOVColour);
+			auto colourpicker = std::make_shared<ColourPicker>(180, 45, &Configs.Aimbot.FOVColour);
 			aimbottab->Push(colourpicker);
+			auto smoothing = std::make_shared<Slider<int>>(100, 61, 150, LIT(L"Smoothing"), LIT(L"%"), 0, 100, &Configs.Aimbot.Smoothing);
+			aimbottab->Push(smoothing);
 			auto fov = std::make_shared<Slider<int>>(100, 85, 150, LIT(L"FOV"), LIT(L"°"), 1, 1000, &Configs.Aimbot.FOV);
 			aimbottab->Push(fov);
 			auto maxdistance = std::make_shared<Slider<int>>(100, 110, 150, LIT(L"Max Distance"), LIT(L"m"), 0, 1000, &Configs.Aimbot.MaxDistance);
@@ -115,9 +117,11 @@ void CreateGUI()
 			auto priority = std::make_shared<DropDown>(100, 150, LIT(L"Priority"), &Configs.Aimbot.Priority,
 								std::vector<std::wstring>{LIT(L"Distance"), LIT(L"Crosshair"), LIT(L"Both")});
 			aimbottab->Push(priority);
+			auto aimbone = std::make_shared<DropDown>(250, 150, LIT(L"Aim Bone"), &Configs.Aimbot.AimBone,
+				std::vector<std::wstring>{LIT(L"Head"), LIT(L"Chest")});
+			aimbottab->Push(aimbone);
 			auto keybind = std::make_shared<KeyBind>(100, 195, LIT(L"Aim Key"), &Configs.Aimbot.Aimkey);
 			aimbottab->Push(keybind);
-
 			auto connecttokmbox = std::make_shared<Button>(210, 5, LIT(L"Connect To Kmbox"), []()
 				{
 					kmbox::KmboxInitialize("");
