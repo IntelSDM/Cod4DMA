@@ -30,6 +30,7 @@ void Player::UpdatePosition(VMMDLL_SCATTER_HANDLE handle)
 void Player::UpdateStance(VMMDLL_SCATTER_HANDLE handle)
 {
 	TargetProcess.AddScatterReadRequest(handle, ClientInfoOffset + Iteration * ClientSizeOffset + StanceOffset, reinterpret_cast<void*>(&Stance), sizeof(int));
+	TargetProcess.AddScatterReadRequest(handle, ClientInfoOffset + Iteration * ClientSizeOffset + LastStandOffset, reinterpret_cast<void*>(&IsInLastStand), sizeof(bool));
 }
 
 
@@ -75,6 +76,8 @@ Player::Player(int itterator)
 
 Stances Player::GetConveredStance()
 {
+	if(IsInLastStand)
+		return Stances::LastStand;
 	if (Stance == 2 || Stance == 1024 || Stance == 2048 || Stance == 1048576 || Stance == 0 || Stance == 16 || Stance == 32)	// 1048576 is sprinting		0 is broken ankles		There's a lot of different values for mounting objects
 		return Stances::Standing;
 	else if (Stance == 4 || Stance == 4096 || Stance == 8192 || Stance == 64 || Stance == 128)	// last two are moving while aiming
@@ -89,12 +92,13 @@ Stances Player::GetConveredStance()
 Vector3 Player::GetHeadWorldPosition()
 {
 	Stances stance = GetConveredStance();
+
 if(stance == Stances::Standing)
 	return Vector3(Position.x, Position.y, Position.z + 60);
 else if(stance == Stances::Crouching)
-	return Vector3(Position.x, Position.y, Position.z + 40);
+	return Vector3(Position.x, Position.y, Position.z + 35);
 else if(stance == Stances::Prone)
-	return Vector3(Position.x, Position.y, Position.z + 21);
+	return Vector3(Position.x, Position.y, Position.z + 18);
 else if (stance == Stances::LastStand)
 return Vector3(Position.x, Position.y, Position.z + 21);
 else
@@ -112,9 +116,9 @@ Vector3 Player::GetAimBonePosition()
 		if (stance == Stances::Standing)
 			return Vector3(Position.x, Position.y, Position.z + 50);
 		else if (stance == Stances::Crouching)
-			return Vector3(Position.x, Position.y, Position.z + 35);
+			return Vector3(Position.x, Position.y, Position.z + 30);
 		else if (stance == Stances::Prone)
-			return Vector3(Position.x, Position.y, Position.z + 21);
+			return Vector3(Position.x, Position.y, Position.z + 18);
 		else if (stance == Stances::LastStand)
 			return Vector3(Position.x, Position.y, Position.z + 21);
 		else

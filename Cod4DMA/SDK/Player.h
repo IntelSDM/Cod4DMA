@@ -26,6 +26,8 @@ private:
 	Vector3 Position = { 0, 0, 0 };
 	uint32_t StanceOffset = 0x470;
 	int Stance = 0;
+	uint32_t LastStandOffset = 0x4A0;
+	bool IsInLastStand = false;
 
 public:
 	Player(int itterator);
@@ -35,6 +37,7 @@ public:
 	void UpdateAlive(VMMDLL_SCATTER_HANDLE handle);
 	void UpdatePosition(VMMDLL_SCATTER_HANDLE handle);
 	void UpdateStance(VMMDLL_SCATTER_HANDLE handle);
+
 
 	int GetIteration();
 	int GetClientSize();
