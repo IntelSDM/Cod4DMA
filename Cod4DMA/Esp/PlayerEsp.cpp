@@ -36,9 +36,9 @@ void DrawPlayers()
 		Vector2 pos = GameInstance->GetLocalPlayer()->WorldToScreen(player->GetPosition());
 		if(pos == Vector2::Zero())
 			continue;
-		int distance = Vector3::Distance(player->GetPosition(), GameInstance->GetLocalPlayer()->GetPosition());
-		if(distance > Configs.Player.MaxDistance)
-			continue;
+		int distance = Vector3::SubDistance(player->GetPosition(), GameInstance->GetLocalPlayer()->GetPosition());
+	//	if(distance > Configs.Player.MaxDistance)
+	//		continue;
 		Vector2 headpos = GameInstance->GetLocalPlayer()->WorldToScreen(player->GetHeadWorldPosition());
 		std::wstring name = Configs.Player.Name ? L"Player" : L"";
 		std::wstring wdistance = Configs.Player.Distance ? L"[" + std::to_wstring(distance) + L"m]" : L"";

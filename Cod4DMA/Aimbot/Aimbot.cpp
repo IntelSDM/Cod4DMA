@@ -21,13 +21,13 @@ int ConditionalSwapPlayer(std::vector<std::shared_ptr<Player>>& entities, int lo
 	{
 		if (Configs.Aimbot.Priority == 2)
 		{
-			if (Vector2::Distance(centreofscreen, GameInstance->GetLocalPlayer()->WorldToScreen(entities[j]->GetPosition())) < Vector2::Distance(centreofscreen, GameInstance->GetLocalPlayer()->WorldToScreen(pivot->GetPosition())))
+			if (Vector2::Distance(centreofscreen, GameInstance->GetLocalPlayer()->WorldToScreen(entities[j]->GetHeadWorldPosition())) < Vector2::Distance(centreofscreen, GameInstance->GetLocalPlayer()->WorldToScreen(pivot->GetHeadWorldPosition())))
 			{
 				++i;
 				std::swap(entities[i], entities[j]);
 				continue;
 			}
-			if (Vector3::Distance(GameInstance->GetLocalPlayer()->GetPosition(), entities[j]->GetPosition()) < Vector3::Distance(GameInstance->GetLocalPlayer()->GetPosition(), pivot->GetPosition()))
+			if (Vector3::SubDistance(GameInstance->GetLocalPlayer()->GetPosition(), entities[j]->GetHeadWorldPosition()) < Vector3::SubDistance(GameInstance->GetLocalPlayer()->GetPosition(), pivot->GetHeadWorldPosition()))
 			{
 				++i;
 				std::swap(entities[i], entities[j]);
@@ -35,7 +35,7 @@ int ConditionalSwapPlayer(std::vector<std::shared_ptr<Player>>& entities, int lo
 		}
 		if (Configs.Aimbot.Priority == 0)
 		{
-			if (Vector3::Distance(GameInstance->GetLocalPlayer()->GetPosition(), entities[j]->GetPosition()) < Vector3::Distance(GameInstance->GetLocalPlayer()->GetPosition(), pivot->GetPosition()))
+			if (Vector3::SubDistance(GameInstance->GetLocalPlayer()->GetPosition(), entities[j]->GetHeadWorldPosition()) < Vector3::SubDistance(GameInstance->GetLocalPlayer()->GetPosition(), pivot->GetHeadWorldPosition()))
 			{
 				++i;
 				std::swap(entities[i], entities[j]);
@@ -43,7 +43,7 @@ int ConditionalSwapPlayer(std::vector<std::shared_ptr<Player>>& entities, int lo
 		}
 		if (Configs.Aimbot.Priority == 1)
 		{
-			if (Vector2::Distance(centreofscreen, GameInstance->GetLocalPlayer()->WorldToScreen(entities[j]->GetPosition())) < Vector2::Distance(centreofscreen, GameInstance->GetLocalPlayer()->WorldToScreen(pivot->GetPosition())))
+			if (Vector2::Distance(centreofscreen, GameInstance->GetLocalPlayer()->WorldToScreen(entities[j]->GetHeadWorldPosition())) < Vector2::Distance(centreofscreen, GameInstance->GetLocalPlayer()->WorldToScreen(pivot->GetHeadWorldPosition())))
 			{
 				++i;
 				std::swap(entities[i], entities[j]);
@@ -65,31 +65,6 @@ void QuickSortPlayers(std::vector<std::shared_ptr<Player>>& entities, int low, i
 }
 
 std::shared_ptr<Player> AimbotTarget;
-bool StickTarget()
-{
-	Vector2 centreofscreen = Vector2(Configs.Overlay.OverrideResolution ? Configs.Overlay.Width / 2 : GetSystemMetrics(SM_CXSCREEN) / 2, Configs.Overlay.OverrideResolution ? Configs.Overlay.Height /2 : GetSystemMetrics(SM_CYSCREEN) /2);
-	if (GameInstance->GetLocalPlayer() == nullptr)
-		return;
-	if (GameInstance->GetPlayerCount() == 0)
-		return;
-	if (GameInstance->GetPlayers().size() == 0)
-		return;
-	if (GameInstance->GetLocalPlayer()->GetPosition() == Vector3::Zero())
-		return;
-	if (AimbotTarget == nullptr)
-		return false;
-	if (!AimbotTarget->GetAlive())
-		return false;
-	if (!AimbotTarget->GetClientSize())
-		return false;
-	if (Vector3::Distance(GameInstance->GetLocalPlayer()->GetPosition(), AimbotTarget->GetPosition()) > Configs.Aimbot.MaxDistance)
-		return false;
-	if (GameInstance->GetLocalPlayer()->WorldToScreen(AimbotTarget->GetPosition()) == Vector2::Zero())
-		return false;
-	if (Vector2::Distance(GameInstance->GetLocalPlayer()->WorldToScreen(AimbotTarget->GetPosition()), centreofscreen) > Configs.Aimbot.FOV)
-		return false;
-	return true;
-}
 
 void GetAimbotTarget()
 {
@@ -102,8 +77,6 @@ void GetAimbotTarget()
 	if (GameInstance->GetLocalPlayer()->GetPosition() == Vector3::Zero())
 		return;
 	if (!Configs.Aimbot.Enable)
-		return;
-	if (StickTarget())
 		return;
 	Vector2 centreofscreen = Vector2(Configs.Overlay.OverrideResolution ? Configs.Overlay.Width / 2 : GetSystemMetrics(SM_CXSCREEN) / 2, Configs.Overlay.OverrideResolution ? Configs.Overlay.Height /2 : GetSystemMetrics(SM_CYSCREEN) /2);
 
@@ -124,13 +97,11 @@ void GetAimbotTarget()
 			continue;
 		if (!player->GetAlive())
 			continue;
-		if (Vector3::Distance(GameInstance->GetLocalPlayer()->GetPosition(), player->GetPosition()) <= 2.0f) // local player
+		if (Vector3::SubDistance(GameInstance->GetLocalPlayer()->GetPosition(), player->GetPosition()) > Configs.Aimbot.MaxDistance)
 			continue;
-		if (Vector3::Distance(GameInstance->GetLocalPlayer()->GetPosition(), player->GetPosition()) > Configs.Aimbot.MaxDistance)
+		if (GameInstance->GetLocalPlayer()->WorldToScreen(player->GetHeadWorldPosition()) == Vector2::Zero())
 			continue;
-		if (GameInstance->GetLocalPlayer()->WorldToScreen(player->GetPosition()) == Vector2::Zero())
-			continue;
-		if (Vector2::Distance(GameInstance->GetLocalPlayer()->WorldToScreen(player->GetPosition()), centreofscreen) > Configs.Aimbot.FOV)
+		if (Vector2::Distance(GameInstance->GetLocalPlayer()->WorldToScreen(player->GetHeadWorldPosition()), centreofscreen) > Configs.Aimbot.FOV)
 			continue;
 		AimbotTarget = player;
 		//	printf("Targeting: %s\n", AimbotTarget->GetName().c_str());

@@ -44,6 +44,7 @@ public:
 
 	static float Dot(Vector3 left, Vector3 right);
 	static float Distance(Vector3 a, Vector3 b);
+	static float SubDistance(Vector3 a, Vector3 b);
 	static int FormattedDistance(Vector3 a, Vector3 b);
 	static Vector3 Zero();
 	static Vector3 Lerp(Vector3 a, Vector3 b, float t);
